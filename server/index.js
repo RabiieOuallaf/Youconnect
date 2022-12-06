@@ -10,6 +10,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import {Register} from './controllers/auth.js';
+import postRoutes from './routes/posts.js';
+import VerifyToken from './middlewares/auth';
+
 
 /* == Configrations == */
 
@@ -46,12 +49,13 @@ const upload = multer({ Storage })
 
 /* == Files routes == */
 
-app.post("auth/register", upload.single("picture"), Register);
+app.post("/auth/register", upload.single("picture"), Register);
+app.post("/post", VerifyToken, upload.single("picture"), createPost);
 /* == Routes == */ 
 
 app.use("/auth", authRoutes);
-app.use("/users", userRoutes)
-
+app.use("/users", userRoutes);
+app.use("/post", postRoutes);
 
 /* == Mongoose setup == */ 
 
