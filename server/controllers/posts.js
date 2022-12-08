@@ -60,3 +60,21 @@ export const getUserPosts = async (req,res) => {
     }
 
 }
+
+/* == Update == */
+
+export const likePosts = async (req, res) => {
+
+    try{
+
+        const {id} = req.params;
+        const {userId} = req.body;
+
+        const post = await Post.findById(id);
+        const isLiked = post.Likes.get
+
+    }catch(err){
+        res.status(404).message({Message : err.message})
+    }
+
+};
