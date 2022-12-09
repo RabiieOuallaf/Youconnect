@@ -14,7 +14,9 @@ import postRoutes from './routes/posts.js';
 import {VerifyToken} from './middlewares/auth.js';
 import { createPost } from './controllers/posts.js';
 import userRoutes from './routes/users.js';
-
+import User from './models/User.js';
+import Post from './models/Post.js';
+import {users, posts} from './Data/DefaultData.js';
 
 /* == Configrations == */
 
