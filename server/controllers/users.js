@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 
 /* == Read == */
 
@@ -48,7 +48,7 @@ export const getUserFriends = async(req, res) => {
 
 /* == Update == */
 
-export const addRemoveFriend = async (req ,res) => {
+export const addRemoveFriends = async (req ,res) => {
     
     try{
 

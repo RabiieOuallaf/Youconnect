@@ -11,7 +11,9 @@ import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import {Register} from './controllers/auth.js';
 import postRoutes from './routes/posts.js';
-import VerifyToken from './middlewares/auth';
+import {VerifyToken} from './middlewares/auth.js';
+import { createPost } from './controllers/posts.js';
+import userRoutes from './routes/users.js';
 
 
 /* == Configrations == */
@@ -56,6 +58,10 @@ app.post("/post", VerifyToken, upload.single("picture"), createPost);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/post", postRoutes);
+
+app.get("/", (req,res) => {
+    res.status(201);
+});
 
 /* == Mongoose setup == */ 
 
