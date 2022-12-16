@@ -3,6 +3,7 @@ import HomePage from './scenes/HomePage';
 import LoginPage from './scenes/LoginPage';
 import ProfilePage from './scenes/ProfilePage';
 
+
 function App() {
   return (
     <div className='app'>
