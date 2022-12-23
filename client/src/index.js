@@ -6,8 +6,8 @@ import authReducer from './state/index.js';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import {
-  persistStore,
-  persistReducer,
+  persistStore, // to save the state to local storage 
+  persistReducer, // to wrap reducers to the persist store 
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -16,8 +16,8 @@ import {
   REGISTER
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { PersistGate } from 'redux-persist/integration/react';
-
+import { PersistGate } from 'redux-persist/integration/react'; // delay the rendering of the ui's app until the persisted state has been retrived and saved to redux
+// Note : we use {} in imports if the imported function are not exported by default 
 const persistConfig = {key: "root", storage, version : 1};
 
 const persistedReducer = persistReducer(persistConfig, authReducer);

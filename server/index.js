@@ -55,6 +55,7 @@ const upload = multer({ Storage })
 
 app.post("/auth/register", upload.single("picture"), Register);
 app.post("/post", VerifyToken, upload.single("picture"), createPost);
+
 /* == Routes == */ 
 
 app.use("/auth", authRoutes);
