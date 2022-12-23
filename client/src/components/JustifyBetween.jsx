@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { styled} from "@mui/system";
 
 const JustifyBetween = styled(Box) ({
-    display: flex,
+    display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
 })

@@ -3,10 +3,12 @@ import Navbar from "scenes/Navbar";
 
 const HomePage = () => {
     
-    return <Box>
-        
-        <Navbar />
-    </Box>
+    return (
+        <Box>
+
+            <Navbar />
+
+        </Box>)
     
 }
 

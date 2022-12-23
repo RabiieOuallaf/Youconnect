@@ -26,7 +26,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
-import { useNavigate, useNavigate } from "react-router-dom";
+import {useNavigate}  from "react-router-dom";
 import  JustifyBetween  from 'components/JustifyBetween';
 
 
@@ -39,13 +39,16 @@ const Navbar = () => {
     const isNonMobileScreens = useMediaQuery("(min-width : 1000px)");
 
     const theme = useTheme();
-    const neutralLight = theme.palette.nuetral.light;
+
+    const neutralLight = theme.palette.neutral.light;
     const dark  = theme.palette.neutral.dark;
     const background = theme.palette.background.default;
     const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
 
-    const FullName = `${user.firstname} ${user.lastName}`;
+    //const FullName = `${user.firstname} ${user.lastName}`;
+
+    const FullName = "Rabie Ouallaf";
 
 
     
