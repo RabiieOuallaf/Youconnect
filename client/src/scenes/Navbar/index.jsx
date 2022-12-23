@@ -29,7 +29,6 @@ import { setMode, setLogout } from "state";
 import {useNavigate}  from "react-router-dom";
 import  JustifyBetween  from 'components/JustifyBetween';
 
-
 const Navbar = () => {
 
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -52,7 +51,8 @@ const Navbar = () => {
 
 
     
-    return <JustifyBetween padding="1rem 6%" background={alt}>
+    return (
+    <JustifyBetween padding="1rem 6%" background={alt}>
 
         <JustifyBetween gap="1.75rem">
             <Typography
@@ -77,9 +77,9 @@ const Navbar = () => {
             </Typography>
             {isNonMobileScreens && (
 
-                <JustifyBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem">
+                <JustifyBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem" >
 
-                    <InputBase>
+                    <InputBase placeholder="Searching...">
 
                         <IconButton>
 
@@ -235,6 +235,8 @@ const Navbar = () => {
         </Box>
         )} 
 </JustifyBetween>
+
+    )
     
 }
 
