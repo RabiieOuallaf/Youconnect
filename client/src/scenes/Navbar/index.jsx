@@ -98,6 +98,7 @@ const Navbar = () => {
 
         {/* Desktop navbar */}
         { isNonMobileScreens ? (<JustifyBetween gap="2rem">
+            
                 <IconButton onClick={ () => dispatch( setMode() ) }  >
                     {theme.palette.mode === "dark" ? (
 

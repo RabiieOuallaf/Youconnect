@@ -53,7 +53,33 @@ const Form = () => {
     const handleForSubmit = async(values, onSubmitProps) => {};
 
     return (
-        <Formik>
+        <Formik
+            onSubmit={handleForSubmit}
+            initialValues={isLogin ? initialValueLogin : initialValueRegister}
+            validationSchema={idLogin ? loginSchema : registerSchema} 
+        >
+
+            {({
+                values,
+                errors,
+                touched,
+                handleBlur,
+                handleChange,
+                handleSubmit,
+                setFieldValue,
+                resetForm,
+
+            }) => (
+                <form onSubmit={handleSubmit}>
+                    <Box
+                        display="grid"
+                        gap="30px"
+                        gridTemp
+                    >
+
+                    </Box>
+                </form>
+            )}
             
         </Formik>
     )
