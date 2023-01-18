@@ -74,8 +74,21 @@ const Form = () => {
                     <Box
                         display="grid"
                         gap="30px"
-                        gridTemp
+                        gridTemplateColumns="repeat(4, minxmax(0,1fr))"
+                        sx={{
+                            "& > div" : {gridColumn: isNonMobile? undefined : 'span 4'}
+                        }}
                     >
+                        {isRegister && (
+                            <>
+                                <textField 
+                                    label="First name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.firstName}
+                                />
+                            </>
+                        )}
 
                     </Box>
                 </form>
