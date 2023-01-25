@@ -46,7 +46,7 @@ export const Register = async (req, res) => {
 
 /* == Login == */ 
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
 
     try{
 
@@ -74,4 +74,3 @@ const login = async (req, res) => {
 
 };
 
-export default login;

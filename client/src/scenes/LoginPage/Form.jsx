@@ -9,7 +9,8 @@ import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import JustifyBetween from "components/JustifyBetween";
 
-const registerSchema = yup.object.shape({
+const registerSchema = yup.object().shape({ 
+    
     firstName : yup.string().required("required"),
     lastName : yup.string().required("required"),
     email : yup.string().email("invalid Email").required("required"),
@@ -17,13 +18,14 @@ const registerSchema = yup.object.shape({
     location: yup.string().required("required"),
     company : yup.string().required("required"),
     picture : yup.string().required("required"),
+
 });
 
-const loginSchema = yup.object.shape({
-
+const loginSchema = yup.object().shape({
+    
     email: yup.string().email("invalid Email").required("required"),
-    password: up.string().required("required"),
-
+    password: yup.string().required("required"),
+    
 });
 
 const initialValueRegister = {
@@ -44,20 +46,77 @@ const initialValueLogin = {
 
 const Form = () => {
     const [pageType, setPageType] = useState("login");
-    const { pallete } = useTheme();
+    const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width: 600px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
-    const handleForSubmit = async(values, onSubmitProps) => {};
+    const register = async (values, onSubmitProps) => {
+
+        const formData = new FormData(); // to allow sending a form data with image 
+
+        for(let value in values){
+            formData.append(value, values[value]); // send the data in form of key-value pairs 
+        }
+
+        formData.append('picturePath' , values.picture.name);
+
+        const savedUserRespons = await fetch(
+            "http://localhost:8001/auth/register",
+            {
+                method: "POST",
+                body: formData,
+            }
+        )
+
+        const savedUser = await savedUserRespons.json();
+        onSubmitProps.resetForm();
+
+        if(savedUser){
+            setPageType("login");
+        }
+
+    }
+
+    const login = async (values, onSubmitProps) => {
+        const loginInRespons = await fetch(
+            "http://localhost:8001/auth/login",
+            {
+
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(values),
+
+            }
+        )
+
+        const loggedIn = await loginInRespons.json();
+        onSubmitProps.resetForm();
+        if(loggedIn){
+            dispatch(
+                setLogin({
+                    user: loggedIn.user,
+                    token: loggedIn.token
+                })
+            )
+            navigate("/home");
+        }
+    }
+
+    const handleFormSubmit = async(values, onSubmitProps) => {
+
+        if (isLogin) await login(values, onSubmitProps);
+        if (isRegister) await register(values, onSubmitProps);
+
+    };
 
     return (
         <Formik
-            onSubmit={handleForSubmit}
+            onSubmit={handleFormSubmit}
             initialValues={isLogin ? initialValueLogin : initialValueRegister}
-            validationSchema={idLogin ? loginSchema : registerSchema} 
+            validationSchema={isLogin ? loginSchema : registerSchema} 
         >
 
             {({
@@ -82,7 +141,7 @@ const Form = () => {
                     >
                         {isRegister && (
                             <>
-                                <textField 
+                                <TextField 
                                     label="First name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
@@ -97,7 +156,7 @@ const Form = () => {
                                     }
                                 />
 
-                                <textField 
+                                <TextField 
                                     label="Last name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
@@ -112,7 +171,7 @@ const Form = () => {
                                     }
                                 />
 
-                                <textField 
+                                <TextField 
                                     label="Location"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
@@ -127,7 +186,7 @@ const Form = () => {
                                     }
                                 />
 
-                                <textField 
+                                <TextField 
                                     label="occupation"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
@@ -143,7 +202,7 @@ const Form = () => {
                                 />
                                 <Box
                                     gridColumns="span 4"
-                                    border={`1px solid ${pallete.neutral.medium}`}
+                                    border={`1px solid ${palette.neutral.medium}`}
                                     borderRadius="5px"
                                     p="1rem"
                                 >
@@ -159,9 +218,9 @@ const Form = () => {
                                         {({ getRootProps, getInputProps }) => (
                                             <Box
                                                 {...getRootProps()}
-                                                border={`2px dashed ${pallete.primary.main}`}
+                                                border={`2px dashed ${palette.primary.main}`}
                                                 p="1rem"
-                                                sx={{ "&:hover": {cursor:pointer} }}
+                                                sx={{ "&hover": {cursor: "pointer"} }}
                                             >
 
                                                 <input {...getInputProps()} />
@@ -173,7 +232,8 @@ const Form = () => {
                                                 ) : (
                                                     <JustifyBetween>
 
-                                                        
+                                                        <Typography>{values.picture.name}</Typography>
+                                                        <EditOutLinedIcon />
 
                                                     </JustifyBetween>
                                                 )}
@@ -187,10 +247,89 @@ const Form = () => {
                             </>
                         )}
 
+                        <TextField
+
+                            label="Email :"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.email}
+                            name="email"
+                            error={Boolean(touched.email) && Boolean(errors.email)}
+                            helperText={touched.email && errors.email}
+                            sx={
+                                {
+                                    gridColumn: "span 2"
+                                }
+                            }
+
+                        />
+
+
+                        <TextField
+
+                            label="Password : "
+                            type="password"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.password}
+                            name="password"
+                            error={Boolean(touched.password) && Boolean(errors.password)}
+                            helperText={touched.password && errors.password}
+                            sx={
+                                {
+                                    gridColumn: "span 2"
+                                }
+                            }
+
+                        />
+
                     </Box>
+                    {/* Button */ }
+
+                    <Box>
+                        <Button
+                        
+                            fullWidth
+                            type="submit"
+                            sx={{
+                                m: "2rem 0",
+                                p: "1rem",
+                                backgroundColor: palette.primary.main,
+                                color: palette.primary.light,
+                                textSizeAdjust: "1rem",
+                                "&:hover": {color: palette.primary.main}
+                            }}
+
+                        >
+
+                            {isLogin ? "LOGIN" : "REGISTER"}
+
+                        </Button>
+                        <Typography
+                            onClick={() => {
+                                setPageType(isLogin? "register" : "login")
+                                resetForm();
+                            }}
+                            sx={{
+                                textDecoration: "underline",
+                                color:palette.primary.main,
+                                "&hover":{
+                                    cursor: "pointer",
+                                    color:palette.primary.light,
+                                },
+                            }}
+                        >
+                            {isLogin ? "Don't you have an account ?  create one !" : "Login here"}
+
+
+                        </Typography>
+                    </Box>
+
                 </form>
             )}
             
         </Formik>
     )
 }
+
+export default Form;

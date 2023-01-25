@@ -1,13 +1,18 @@
 import {Box, Typography, useTheme, useMediaQuery} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Form from "./Form";
+
+
 
 const LoginPage = () => {
 
-    const theme = useTheme();
     const isNonMobileScreen = useMediaQuery(" (min-width: 1000px) ");
+    const navigate = useNavigate();
+    const {palette} = useTheme();
     
-    return(<box>
+    return(<Box>
 
-        <box width="100%" backgroundColor={theme.palette.background.alt} p="1rem 6%" textAlign="center">
+        <Box width="100%" backgroundColor={palette.background.alt} p="1rem 6%" textAlign="center">
 
             <Typography
 
@@ -19,7 +24,7 @@ const LoginPage = () => {
                 sx={
                     {
                         "&:hover": {
-                            color: primaryLight,
+                            color: palette.primary.light,
                             cursor: "pointer"
                         }
                     }
@@ -30,23 +35,24 @@ const LoginPage = () => {
 
                 </Typography>
 
-        </box>
+        </Box>
 
-        <box
+        <Box
             width={isNonMobileScreen ? "50%" : "93%"}
             p="2rem"
             m="2rem auto"
             borderRadius="1.5rem"
-            backrgoundColor={theme.palette.background.alt}
+            backgroundColor={palette.background.alt}
         >
 
             <Typography fontWeight="500" variant="h5" sx={ { mb: "1.5rem" } }>
-                Welcome 👋 , in youConnect , you'll find your dream job ! 
+                Welcome 👋 in youConnect , Our klika socialmedia!
             </Typography>
+            <Form />
 
-        </box>
+        </Box>
 
-    </box>
+    </Box>
 
     ) 
     
