@@ -50,23 +50,16 @@ export const login = async (req, res) => {
 
     try{
 
-        // Fist , look up if the user exsits or not 
-        
-        const {email , password} = req.body;
-        const user = await User.findOne({email : email});
+        const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) return res.status(400).json({ msg: "User does not exist. " });
 
-        if(!user) return res.status(404).json({ Warnning : "User does not exsit" });
-
-        // if the user does exsits compare the passwords 
-
-        const isMatch = bcrypt.compare(password,user.password );
-
-        if(!isMatch) return res.status(404).json({Alert : "Email or password is wrong"});
-
-        const token = jwt.sign({id : user._id}, process.env.JWT_SECRET);
-        delete user.password;
-        res.status(200).json({token , user});
-        
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Email or password are not correct"})
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    delete user.password;
+    res.status(200).json({ token, user });
+                
     }catch(err){
 
         res.status(500).json({error : err.message});

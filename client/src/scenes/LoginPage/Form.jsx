@@ -83,12 +83,17 @@ const Form = () => {
       };
     
       const login = async (values, onSubmitProps) => {
+
         const loggedInResponse = await fetch("http://localhost:7007/auth/login", {
+            
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
+
         });
+
         const loggedIn = await loggedInResponse.json();
+
         onSubmitProps.resetForm();
         if (loggedIn) {
           dispatch(
@@ -115,10 +120,10 @@ const Form = () => {
     return (
 
         <Formik
-      onSubmit={handleFormSubmit}
-      initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
-      validationSchema={isLogin ? loginSchema : registerSchema}
-    >
+            onSubmit={handleFormSubmit}
+            initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+            validationSchema={isLogin ? loginSchema : registerSchema}
+        >
       {({
         values,
         errors,
@@ -144,7 +149,7 @@ const Form = () => {
                   label="First Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
+                  value={values.firstName ? values.firstName : ''}
                   name="firstName"
                   error={
                     Boolean(touched.firstName) && Boolean(errors.firstName)
@@ -156,7 +161,7 @@ const Form = () => {
                   label="Last Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
+                  value={values.lastName ? values.lastName : ''}
                   name="lastName"
                   error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                   helperText={touched.lastName && errors.lastName}
@@ -166,7 +171,7 @@ const Form = () => {
                   label="Location"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.location}
+                  value={values.location ? values.location : ''}
                   name="location"
                   error={Boolean(touched.location) && Boolean(errors.location)}
                   helperText={touched.location && errors.location}
@@ -176,7 +181,7 @@ const Form = () => {
                   label="Occupation"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.occupation}
+                  value={values.occupation ? values.occupation : ''}
                   name="occupation"
                   error={
                     Boolean(touched.occupation) && Boolean(errors.occupation)
@@ -224,7 +229,7 @@ const Form = () => {
               label="Email"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.email}
+              value={values.email ? values.email : ''}
               name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
@@ -235,7 +240,7 @@ const Form = () => {
               type="password"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.password}
+              value={values.password ? values.password : ''}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
