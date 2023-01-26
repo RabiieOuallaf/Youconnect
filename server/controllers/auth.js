@@ -51,6 +51,7 @@ export const login = async (req, res) => {
     try{
 
         // Fist , look up if the user exsits or not 
+        
         const {email , password} = req.body;
         const user = await User.findOne({email : email});
 
